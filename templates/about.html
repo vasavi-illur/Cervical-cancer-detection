@@ -1,0 +1,197 @@
+{% extends "index.html" %}
+
+{% block content %}
+<style>
+    .about-section {
+        background: linear-gradient(135deg, #fff9f2 0%, #f5f0e8 100%);
+        padding: 80px 20px;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        min-height: calc(100vh - 200px);
+    }
+    .about-container {
+        max-width: 1100px;
+        margin: auto;
+        background: white;
+        padding: 50px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        border: 1px solid rgba(237, 137, 54, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+    .about-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #ed8936, #38b2ac);
+    }
+    .about-title {
+        text-align: center;
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #2d3748;
+        position: relative;
+        padding-bottom: 15px;
+    }
+    .about-title:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #ed8936, #38b2ac);
+        border-radius: 2px;
+    }
+    .about-subtitle {
+        text-align: center;
+        font-size: 20px;
+        color: #4a5568;
+        margin-bottom: 40px;
+        font-weight: 400;
+    }
+    .about-text {
+        font-size: 17px;
+        line-height: 1.8;
+        color: #4a5568;
+        margin-bottom: 25px;
+        text-align: justify;
+    }
+    .highlight-box {
+        background: linear-gradient(135deg, #ed8936 0%, #38b2ac 100%);
+        padding: 25px;
+        border-radius: 10px;
+        color: white;
+        margin: 30px 0;
+        font-size: 18px;
+        font-weight: 600;
+        text-align: center;
+        letter-spacing: 0.5px;
+        box-shadow: 0 5px 15px rgba(237, 137, 54, 0.3);
+    }
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+        margin: 40px 0;
+    }
+    .feature-card {
+        background: #fff5f5;
+        padding: 25px;
+        border-radius: 8px;
+        border-left: 4px solid #ed8936;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #fed7d7;
+    }
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(237, 137, 54, 0.15);
+        background: white;
+    }
+    .feature-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 10px;
+    }
+    .feature-desc {
+        font-size: 15px;
+        color: #4a5568;
+        line-height: 1.6;
+    }
+    .disclaimer {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border-left: 4px solid #ed8936;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 30px;
+        font-size: 15px;
+        color: #7c2d12;
+        border: 1px solid #fbbf24;
+    }
+    h3 {
+        color: #2d3748;
+        margin: 30px 0 20px 0;
+        font-size: 24px;
+        font-weight: 700;
+        position: relative;
+        padding-bottom: 10px;
+    }
+    h3:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(90deg, #ed8936, #38b2ac);
+        border-radius: 2px;
+    }
+</style>
+
+<section class="about-section">
+    <div class="about-container">
+
+        <h2 class="about-title">Cervical Cancer Prediction System</h2>
+        <p class="about-subtitle">
+            Advanced AI-Powered Diagnostic Support for Healthcare Professionals
+        </p>
+
+        <p class="about-text">
+            The Cervical Cancer Prediction System is a sophisticated medical decision support tool designed to assist healthcare professionals in early detection and risk assessment of cervical cancer. By leveraging state-of-the-art machine learning algorithms, our system analyzes comprehensive patient data to identify potential risk factors and provide evidence-based predictions.
+        </p>
+
+        <p class="about-text">
+            Cervical cancer remains one of the most preventable and treatable forms of cancer when detected early. This platform bridges the gap between advanced computational analytics and clinical practice, offering physicians a powerful tool to enhance diagnostic accuracy and improve patient outcomes through data-driven insights.
+        </p>
+
+        <div class="highlight-box">
+            Transforming Cervical Cancer Screening Through Artificial Intelligence and Predictive Analytics
+        </div>
+
+        <h3 style="color: #2c3e50; margin: 30px 0 20px 0; font-size: 24px;">System Features</h3>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-title">Multi-Algorithm Analysis</div>
+                <div class="feature-desc">Utilizes ensemble methods including XGBoost, Random Forest, SVM, and Logistic Regression for robust prediction accuracy.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-title">Comprehensive Risk Assessment</div>
+                <div class="feature-desc">Evaluates multiple risk factors including demographic data, sexual history, and clinical indicators.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-title">Patient Management</div>
+                <div class="feature-desc">Integrated system for managing patient records, historical data, and screening results.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-title">Performance Analytics</div>
+                <div class="feature-desc">Comparative analysis of algorithm performance with detailed metrics and visualization tools.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-title">Clinical Decision Support</div>
+                <div class="feature-desc">Evidence-based recommendations to support healthcare professionals in diagnostic processes.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-title">Data Security & Compliance</div>
+                <div class="feature-desc">Secure handling of sensitive patient data in compliance with healthcare privacy regulations.</div>
+            </div>
+        </div>
+
+        <p class="about-text">
+            Our system is built on validated medical research and continuously refined with clinical insights. It serves as a complementary tool to enhance, not replace, the expertise of healthcare providers. The platform is designed with usability in mind, ensuring that medical professionals can easily integrate it into their existing workflow.
+        </p>
+
+        <div class="disclaimer">
+            <strong>Important Notice:</strong> This system is designed as a decision support tool for qualified healthcare professionals. Predictions should be interpreted in the context of comprehensive clinical evaluation and should not be used as a sole basis for diagnosis or treatment decisions. Always follow established medical guidelines and protocols.
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

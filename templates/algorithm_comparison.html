@@ -1,0 +1,54 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<section id="portfolio" class="portfolio section-bg">
+    <div class="container"><br><br>
+
+        <div class="section-title">
+            <h2>Algorithm Accuracy Comparison</h2>
+            <p>Overall performance of machine learning classifiers.</p>
+        </div>
+
+        <!-- OVERALL ACCURACY TABLE -->
+        <table class="table table-bordered table-striped" style="background:white;">
+            <thead class="table-dark">
+                <tr>
+                    <th>Classifier</th>
+                    <th>Accuracy (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m, acc in results.items() %}
+                    <tr {% if m == best_model %}
+                        style="background:#d4edda; font-weight:bold;"
+                        {% endif %}>
+                        <td>{{ m }}</td>
+                        <td>{{ acc }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <br>
+
+        <center>
+            <a href="{{ url_for('generate_and_show_graph') }}"
+               class="btn btn-success"
+               style="padding:12px 30px; font-size:18px;">
+                📊 Generate Overall Best Classifier Graph
+            </a>
+        </center>
+
+        <br><br>
+
+        {% if graph_generated %}
+         <div style="display:flex; justify-content:center; margin-top:20px;">
+         <img src="{{ url_for('static', filename='graphs/algorithm_comparison.png') }}"
+         style="max-width:80%; border:2px solid #ccc; border-radius:10px; padding:10px; background:white;">
+         </div>
+        {% endif %}
+
+
+    </div>
+</section>
+{% endblock %}

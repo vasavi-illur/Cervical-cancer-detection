@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff9f2 0%, #f5f0e8 100%);
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            border: 1px solid rgba(237, 137, 54, 0.1);
+            width: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ed8936, #38b2ac);
+        }
+        .login-title {
+            color: #2d3748;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .login-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #ed8936, #38b2ac);
+            border-radius: 2px;
+        }
+        .form-control {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            padding: 12px 15px;
+            height: 50px;
+            background: #f8f9fa;
+            transition: all 0.3s;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #ed8936;
+            box-shadow: 0 0 0 3px rgba(237, 137, 54, 0.1);
+            background: white;
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #ed8936 0%, #38b2ac 100%);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            height: 50px;
+            width: 100%;
+            transition: all 0.3s;
+            color: white;
+            box-shadow: 0 4px 15px rgba(237, 137, 54, 0.3);
+            margin-top: 10px;
+        }
+        .btn-login:hover {
+            background: linear-gradient(135deg, #dd6b20 0%, #319795 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(237, 137, 54, 0.4);
+        }
+        /* Alert messages */
+        .alert-custom {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px solid;
+            font-weight: 500;
+        }
+        .alert-danger {
+            background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+            color: #9b2c2c;
+            border-color: #fc8181;
+        }
+        .alert-success {
+            background: linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%);
+            color: #22543d;
+            border-color: #48bb78;
+        }
+        /* Link styling */
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #4a5568;
+        }
+        .register-link a {
+            color: #ed8936;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .register-link a:hover {
+            color: #dd6b20;
+            text-decoration: underline;
+        }
+        /* Close button for alerts */
+        .btn-close:focus {
+            box-shadow: none;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="login-container">
+    <div class="login-card">
+        <h4 class="login-title">Doctor Login</h4>
+
+        <!-- Flash messages (SUCCESS / ERROR) -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert-custom alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="mb-3">
+                <input type="text" name="username" class="form-control"
+                       placeholder="Username" required>
+            </div>
+
+            <div class="mb-3">
+                <input type="password" name="password" class="form-control"
+                       placeholder="Password" required>
+            </div>
+
+            <button type="submit" class="btn btn-login">
+                Access Medical Portal
+            </button>
+        </form>
+
+        <!-- Optional Register Link -->
+        <div class="register-link">
+            <small>New doctor? <a href="{{ url_for('register') }}">Register here</a></small>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<style>
+    .patient-details-container {
+        padding: 30px 40px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: 
+            radial-gradient(ellipse at top, rgba(189, 195, 199, 0.1), transparent),
+            radial-gradient(ellipse at bottom, rgba(149, 165, 166, 0.08), transparent),
+            linear-gradient(to bottom right, #f8f9fa, #ecf0f1);
+        min-height: 100vh;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 3px solid #dfe6e9;
+    }
+
+    .page-title {
+        color: #2c3e50;
+        font-size: 2.2rem;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin: 0;
+    }
+
+    .page-title:after {
+        content: "";
+        position: absolute;
+        bottom: -23px;
+        left: 0;
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, #2c3e50, #7f8c8d);
+    }
+
+    .back-btn {
+        padding: 12px 28px;
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s;
+        cursor: pointer;
+        font-size: 1rem;
+        box-shadow: 0 4px 12px rgba(44, 62, 80, 0.2);
+    }
+
+    .back-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(44, 62, 80, 0.3);
+        background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+        color: white;
+        text-decoration: none;
+    }
+
+    .details-card {
+        background: white;
+        border-radius: 15px;
+        padding: 35px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: 1px solid #dfe6e9;
+        border-top: 5px solid #7f8c8d;
+        margin-bottom: 30px;
+    }
+
+    .patient-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .patient-table th {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: white;
+        padding: 18px 20px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 1rem;
+        border: none;
+        width: 40%;
+    }
+
+    .patient-table td {
+        padding: 18px 20px;
+        background: #f8f9fa;
+        color: #2c3e50;
+        font-size: 0.95rem;
+        border-bottom: 1px solid #dfe6e9;
+    }
+
+    .patient-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .patient-table tr:hover td {
+        background: #ecf0f1;
+    }
+
+    .prediction-value {
+        font-weight: bold;
+        font-size: 1.2rem;
+        padding: 8px 16px;
+        border-radius: 20px;
+        display: inline-block;
+    }
+
+    .prediction-positive {
+        color: #c0392b;
+        background: rgba(231, 76, 60, 0.1);
+    }
+
+    .prediction-negative {
+        color: #27ae60;
+        background: rgba(46, 204, 113, 0.1);
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+
+    .download-btn {
+        padding: 14px 32px;
+        background: linear-gradient(135deg, #7f8c8d 0%, #95a5a6 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 12px rgba(127, 140, 141, 0.3);
+    }
+
+    .download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(127, 140, 141, 0.4);
+        background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+    }
+
+    
+    .language-box {
+        display: block;
+        margin-bottom: 25px;
+        font-size: 16px;
+        padding: 15px;
+        background: #ecf0f1;
+        border-radius: 10px;
+        border: 1px solid #bdc3c7;
+    }
+
+    .language-box select {
+        display: inline-block;
+        padding: 10px 16px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: 2px solid #7f8c8d;
+        background: white;
+        color: #2c3e50;
+        font-weight: 500;
+        min-width: 200px;
+    }
+
+    .language-box label {
+        color: #2c3e50;
+        font-weight: 600;
+        margin-right: 15px;
+    }
+
+    .patient-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #ecf0f1;
+    }
+
+    .patient-header h1 {
+        color: #2c3e50;
+        margin: 0;
+        font-size: 2rem;
+    }
+
+    .patient-header:before {
+        content: "👤";
+        font-size: 2.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .patient-details-container {
+            padding: 20px;
+        }
+        
+        .page-header {
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+        
+        .details-card {
+            padding: 20px;
+        }
+        
+        .patient-table {
+            display: block;
+            overflow-x: auto;
+        }
+        
+        .action-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .back-btn, .download-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<div class="patient-details-container">
+
+    <div class="page-header">
+        <h1 class="page-title">👤 Patient Details</h1>
+        <a href="{{ url_for('my_patients') }}" class="back-btn">⬅ Back</a>
+    </div>
+
+    <div class="details-card">
+        <table class="patient-table">
+    <tr><th>Patient Name</th><td>{{ patient.name }}</td></tr>
+
+    <tr><th>Age</th><td>{{ patient.details['Age'] | int }}</td></tr>
+
+    <tr><th>Number of Sexual Partners</th>
+        <td>{{ patient.details['Number of sexual partners'] | int }}</td></tr>
+
+    <tr><th>First Sexual Intercourse</th>
+        <td>{{ patient.details['First sexual intercourse'] | int }}</td></tr>
+
+    <tr><th>Number of Pregnancies</th>
+        <td>{{ patient.details['Num of pregnancies'] | int }}</td></tr>
+
+    <tr><th>Smokes</th>
+        <td>{{ patient.details['Smokes'] | int }}</td></tr>
+
+    <tr><th>Smokes (Years)</th>
+        <td>{{ patient.details['Smokes (years)'] | int }}</td></tr>
+
+    <tr><th>Hormonal Contraceptives</th>
+        <td>{{ patient.details['Hormonal Contraceptives'] | int }}</td></tr>
+
+    <tr><th>Hormonal Contraceptives (Years)</th>
+        <td>{{ patient.details['Hormonal Contraceptives (years)'] | int }}</td></tr>
+
+    <tr><th>IUD</th>
+        <td>{{ patient.details['IUD'] | int }}</td></tr>
+
+    <tr><th>STDs</th>
+        <td>{{ patient.details['STDs'] | int }}</td></tr>
+
+    <tr><th>STDs (Number)</th>
+        <td>{{ patient.details['STDs (number)'] | int }}</td></tr>
+
+    <tr><th>Condylomatosis</th>
+        <td>{{ patient.details['STDs:condylomatosis'] | int }}</td></tr>
+
+    <tr><th>Vulvo-perineal Condylomatosis</th>
+        <td>{{ patient.details['STDs:vulvo-perineal condylomatosis'] | int }}</td></tr>
+
+    <tr><th>Hinselmann</th>
+        <td>{{ patient.details['Hinselmann'] | int }}</td></tr>
+
+    <tr><th>Schiller</th>
+        <td>{{ patient.details['Schiller'] | int }}</td></tr>
+
+    <tr>
+        <th>Prediction</th>
+        <td class="prediction-value
+            {% if patient.prediction == 'Cancer Detected' %}
+                prediction-positive
+            {% else %}
+                prediction-negative
+            {% endif %}
+        ">
+            {{ patient.prediction }}
+        </td>
+    </tr>
+</table>
+
+        
+    </div>
+
+    
+    <div style="text-align:center; margin-top:30px;">
+        <form action="{{ url_for('generate_report') }}" method="post">
+
+            <input type="hidden" name="patient_name" value="{{ patient.name }}">
+            <input type="hidden" name="age" value="{{ patient.age }}">
+            <input type="hidden" name="prediction" value="{{ patient.prediction }}">
+
+            
+
+            <button type="submit" class="back-btn">
+                📄 Download Medical Report
+            </button>
+        </form>
+    </div>
+
+    <div style="text-align:center; margin-top:20px;">
+        <a href="{{ url_for('my_patients') }}" class="back-btn">👥 Back to All Patients</a>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,279 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<style>
+    .dashboard-container {
+        display: flex;
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .sidebar {
+        width: 280px;
+        background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+        padding: 25px 15px;
+        color: white;
+        box-shadow: 3px 0 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 10;
+    }
+    
+    .sidebar h3 {
+        color: #ecf0f1;
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #7f8c8d;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .sidebar h3:before {
+        content: "🩺";
+        font-size: 1.8rem;
+    }
+    
+    .sidebar a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 18px;
+        color: #ecf0f1;
+        background: rgba(52, 73, 94, 0.3);
+        border-radius: 10px;
+        margin-bottom: 12px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border-left: 4px solid transparent;
+        font-weight: 500;
+    }
+    
+    .sidebar a:hover {
+        background: rgba(127, 140, 141, 0.3);
+        transform: translateX(5px);
+        border-left: 4px solid #95a5a6;
+        box-shadow: 0 4px 12px rgba(149, 165, 166, 0.2);
+    }
+    
+    .sidebar a.active {
+        background: rgba(127, 140, 141, 0.4);
+        border-left: 4px solid #95a5a6;
+    }
+    
+    .main-content {
+        flex: 1;
+        padding: 30px 40px;
+        background: 
+            radial-gradient(ellipse at top, rgba(189, 195, 199, 0.1), transparent),
+            radial-gradient(ellipse at bottom, rgba(149, 165, 166, 0.08), transparent),
+            linear-gradient(to bottom right, #f8f9fa, #ecf0f1);
+        overflow-y: auto;
+    }
+    
+    .main-content h2 {
+        color: #2c3e50;
+        font-size: 2.2rem;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 3px solid #ecf0f1;
+        position: relative;
+    }
+    
+    .main-content h2:after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 120px;
+        height: 3px;
+        background: linear-gradient(90deg, #2c3e50, #7f8c8d);
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        margin-top: 20px;
+        border: 1px solid #dfe6e9;
+    }
+    
+    th {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: white;
+        padding: 18px 20px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 1rem;
+        border: none;
+    }
+    
+    th:first-child {
+        border-top-left-radius: 12px;
+    }
+    
+    th:last-child {
+        border-top-right-radius: 12px;
+    }
+    
+    td {
+        padding: 18px 20px;
+        border-bottom: 1px solid #dfe6e9;
+        color: #2c3e50;
+        font-size: 0.95rem;
+    }
+    
+    tr {
+        transition: all 0.2s ease;
+    }
+    
+    tr:hover {
+        background-color: #f8f9fa;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .positive { 
+        color: #c0392b; 
+        font-weight: bold;
+        background: rgba(231, 76, 60, 0.1);
+        padding: 6px 12px;
+        border-radius: 20px;
+        display: inline-block;
+    }
+    
+    .negative { 
+        color: #27ae60; 
+        font-weight: bold;
+        background: rgba(46, 204, 113, 0.1);
+        padding: 6px 12px;
+        border-radius: 20px;
+        display: inline-block;
+    }
+
+    .patient-link {
+        color: #2c3e50;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .patient-link:hover {
+        color: #34495e;
+        text-decoration: none;
+        transform: translateX(5px);
+    }
+    
+    .patient-link:before {
+        content: "👤";
+        font-size: 1.1rem;
+    }
+    
+    /* Empty state styling */
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        margin-top: 30px;
+    }
+    
+    .empty-state p {
+        color: #7f8c8d;
+        font-size: 1.1rem;
+        margin-top: 15px;
+    }
+    
+    .empty-state:before {
+        content: "📋";
+        font-size: 3rem;
+        display: block;
+        margin-bottom: 20px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .dashboard-container {
+            flex-direction: column;
+        }
+        
+        .sidebar {
+            width: 100%;
+            padding: 15px;
+        }
+        
+        .sidebar a {
+            padding: 12px 15px;
+        }
+        
+        .main-content {
+            padding: 20px;
+        }
+        
+        table {
+            display: block;
+            overflow-x: auto;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+        }
+    }
+</style>
+
+<div class="dashboard-container">
+    <div class="sidebar">
+        <h3>🩺 Doctor Panel</h3>
+        <a href="{{ url_for('doctor_dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('add_patient') }}">Predict Cancer</a>
+        <a href="{{ url_for('my_patients') }}" class="active">My Patients</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+    <div class="main-content">
+        <h2>My Patients</h2>
+
+        {% if data and data|length > 0 %}
+        <table>
+            <tr>
+                <th>Patient Name</th>
+                <th>Age</th>
+                <th>Result</th>
+            </tr>
+            {% for p in data %}
+            <tr>
+                <!-- ✅ CORRECT CLICKABLE NAME -->
+                <td>
+                    <a href="{{ url_for('view_patient', patient_id=p[0]) }}"
+                       class="patient-link">
+                        {{ p[1] }}
+                    </a>
+                </td>
+
+                <!-- ✅ CORRECT AGE -->
+                <td>{{ p[2] }}</td>
+
+                <!-- ✅ CORRECT RESULT -->
+                <td class="{% if 'No' in p[3] %}negative{% else %}positive{% endif %}">
+                    {{ p[3] }}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No patients found.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

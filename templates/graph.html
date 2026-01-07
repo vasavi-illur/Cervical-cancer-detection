@@ -1,0 +1,122 @@
+{% extends 'index.html' %}
+
+{% block navbar %}
+    <!-- Your existing navbar -->
+{% endblock %}
+
+{% block content %}
+<style>
+    .results-container {
+        width: 80%;
+        margin: 20px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .accuracy-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    .accuracy-table th, .accuracy-table td {
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+    .accuracy-table th {
+        background: #2c3e50;
+        color: white;
+        font-size: 18px;
+    }
+    .accuracy-table tr:hover {
+        background: #f5f5f5;
+    }
+    .best-algorithm {
+        background: #d4edda !important;
+        font-weight: bold;
+        color: #155724;
+    }
+    .accuracy-value {
+        font-size: 20px;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+    .generate-btn {
+        background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin: 20px 0;
+        transition: all 0.3s ease;
+    }
+    .generate-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+    }
+    .best-performance {
+        background: #d4edda;
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 5px solid #28a745;
+        margin: 20px 0;
+    }
+</style>
+
+<section id="contact" class="contact">
+    <center>
+        <div class="section-title">
+            <h2>Algorithm Comparison Results</h2>
+        </div>
+
+        <div class="results-container">
+            <h3 style="color: #2c3e50; margin-bottom: 20px;">Algorithm Accuracy Comparison</h3>
+            
+           
+
+            {% if graph_message %}
+                <div style="color: green; font-weight: bold; margin: 10px 0;">
+                    {{ graph_message }}
+                </div>
+            {% endif %}
+
+            <table class="accuracy-table">
+                <thead>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Accuracy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for algo, accuracy in results.items() %}
+                    <tr {% if algo == best_model %}class="best-algorithm"{% endif %}>
+                        <td>{{ algo }}</td>
+                        <td class="accuracy-value">{{ accuracy }}%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="best-performance">
+                <h4>Best Performing Algorithm: <strong>{{ best_model }}</strong></h4>
+                <p style="margin: 5px 0; font-size: 18px;">Accuracy: <strong>{{ best_accuracy }}%</strong></p>
+            </div>
+
+            <!-- Display generated graph if available -->
+            {% if graph_generated %}
+            <div style="margin-top: 30px; text-align: center;">
+                <h4>Generated Algorithm Comparison Graph</h4>
+                <img src="/static/graphs/algorithm_comparison.png" 
+                     style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px;"
+                     alt="Algorithm Comparison Graph"
+                     onerror="this.style.display='none'">
+            </div>
+            {% endif %}
+        </div>
+
+    </center>
+</section>
+{% endblock %}

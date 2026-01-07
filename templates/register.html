@@ -1,0 +1,199 @@
+{% extends 'index.html' %}
+
+{% block navbar %}
+  <!-- same navbar you had -->
+{% endblock %}
+
+{% block content %}
+<style>
+    .contact {
+        background: linear-gradient(135deg, #fff9f2 0%, #f5f0e8 100%);
+        min-height: 100vh;
+        padding: 80px 20px;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    .section-title h2 {
+        font-size: 36px;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 40px;
+        position: relative;
+        padding-bottom: 15px;
+        text-align: center;
+    }
+    .section-title h2:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #ed8936, #38b2ac);
+        border-radius: 2px;
+    }
+    .info {
+        background: #fff;
+        padding: 50px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        border: 1px solid rgba(237, 137, 54, 0.1);
+        max-width: 500px;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+    }
+    .info::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #ed8936, #38b2ac);
+    }
+    .form-control {
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 16px;
+        padding: 12px 15px;
+        height: 50px;
+        background: #f8f9fa;
+        transition: all 0.3s;
+        color: #2d3748;
+    }
+    .form-control:focus {
+        outline: none;
+        border-color: #ed8936;
+        box-shadow: 0 0 0 3px rgba(237, 137, 54, 0.1);
+        background: white;
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #ed8936 0%, #38b2ac 100%);
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        height: 50px;
+        width: 100%;
+        transition: all 0.3s;
+        color: white;
+        box-shadow: 0 4px 15px rgba(237, 137, 54, 0.3);
+    }
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #dd6b20 0%, #319795 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(237, 137, 54, 0.4);
+    }
+    
+    /* Alert messages - matching your theme */
+    .alert {
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border: 2px solid;
+        font-weight: 500;
+    }
+    .alert-danger {
+        background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+        color: #9b2c2c;
+        border-color: #fc8181;
+    }
+    .alert-success {
+        background: linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%);
+        color: #22543d;
+        border-color: #48bb78;
+    }
+    
+    /* Link styling */
+    a {
+        color: #ed8936;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s;
+    }
+    a:hover {
+        color: #dd6b20;
+        text-decoration: underline;
+    }
+    
+    .form-group label {
+        color: #4a5568;
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: block;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .info {
+            padding: 30px 20px;
+        }
+        .section-title h2 {
+            font-size: 28px;
+        }
+    }
+</style>
+
+<section class="contact">
+    <div class="section-title">
+        <h2>Register (Doctor)</h2>
+    </div>
+
+    <div class="col-12 col-md-8 col-lg-6 mx-auto">
+
+        <!-- ✅ FLASH MESSAGES -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} text-center">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('register') }}" method="POST" class="info">
+
+            <!-- ✅ MATCH BACKEND FIELD NAME -->
+            <div class="form-group">
+                <input type="text" name="username" class="form-control"
+                       placeholder="Doctor Username" required>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="email" name="email" class="form-control"
+                       placeholder="Email Address" required>
+            </div>
+
+            <!-- STRONG PASSWORD -->
+            <div class="form-group mt-3">
+                <input type="password" name="password" class="form-control"
+                       placeholder="Password" required
+                       pattern="(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$%^&+=]).{8,}"
+                       title="Must contain uppercase, lowercase, number, symbol & 8+ chars">
+            </div>
+
+            <!-- CONFIRM PASSWORD (FRONTEND ONLY) -->
+            <div class="form-group mt-3">
+                <input type="password" name="c_password" class="form-control"
+                       placeholder="Confirm Password" required
+                       oninput="this.setCustomValidity(this.value !== document.querySelector('[name=password]').value ? 'Passwords do not match' : '')">
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary">
+                    Create Medical Account
+                </button>
+            </div>
+
+            <div class="text-center mt-3">
+                <small>Already registered?
+                    <a href="{{ url_for('login') }}">Login here</a>
+                </small>
+            </div>
+
+        </form>
+    </div>
+</section>
+{% endblock %}

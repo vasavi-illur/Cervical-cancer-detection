@@ -1,0 +1,48 @@
+{% extends 'index.html' %}
+
+{% block navbar %}
+<nav id="navbar" class="navbar nav-menu">
+    <ul>
+        <li><a href="{{url_for('home')}}" class="nav-link scrollto"><i class="bx bx-home"></i> <span>Home</span></a></li>
+        <li><a href="{{url_for('view_data')}}" class="nav-link scrollto"><i class="bx bx-server"></i><span>View Data</span></a></li>
+        <li><a href="{{url_for('algorithm')}}" class="nav-link scrollto active"><i class="bx bx-analyse"></i> <span>Algorithm</span></a></li>
+        <li><a href="{{url_for('algorithm_comparison')}}" class="nav-link scrollto"><i class="bx bx-bar-chart-alt-2"></i> <span>Compare Algorithms</span></a></li>
+        <li><a href="{{url_for('logout')}}" class="nav-link scrollto"><i class="bx bx-log-out"></i> <span>Logout</span></a></li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+<section id="testimonials" class="testimonials section-bg">
+    <div class="container"><br><br>
+
+        {% if accuracy %}
+            <center><h2 style="color:green;">{{ accuracy }}</h2></center><br>
+        {% endif %}
+
+        <div class="section-title">
+            <h2>Select Algorithm</h2>
+        </div>
+
+        <form action="{{ url_for('algorithm') }}" method="post">
+            <center>
+                <div class="col-6">
+                    <select class="form-select" name="algorithm" required>
+                        <option hidden>Select Algorithm</option>
+                        <option value="1">AdaBoost</option>
+                        <option value="2">Logistic Regression</option>
+                        <option value="3">XGBoost</option>
+                        <option value="4">Stacking Classifier</option>
+                        
+                        <option value="9" disabled>ANN (Not Available)</option>
+                    </select>
+
+                    <br>
+                    <input type="submit" value="Check Accuracy" class="btn btn-primary">
+                </div>
+            </center>
+        </form>
+
+    </div>
+</section>
+{% endblock %}

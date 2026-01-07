@@ -1,0 +1,396 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="doctor-dashboard">
+  <div class="dashboard-container">
+    <!-- Header Section -->
+    <div class="dashboard-header">
+      <div class="header-content">
+        <div class="title-section">
+          <h1 class="dashboard-title">Medical Dashboard</h1>
+          <p class="dashboard-subtitle">Cervical Cancer Risk Assessment System</p>
+        </div>
+        <div class="doctor-info">
+          <div class="avatar">
+            <i class="fas fa-user-md"></i>
+          </div>
+          <div class="doctor-details">
+            <p class="welcome-text">Welcome back</p>
+            <p class="doctor-email">{{ doctor_email }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Cards Section -->
+    <div class="actions-grid">
+      <div class="action-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-user-plus"></i>
+          </div>
+          <div class="card-title-section">
+            <h3>Patient Management</h3>
+            <p class="card-subtitle">New Patient Registration</p>
+          </div>
+        </div>
+        <p class="card-description">Register new patients and perform cervical cancer risk assessment using advanced predictive analytics</p>
+        <a href="{{ url_for('add_patient') }}" class="card-button primary">
+          <span class="btn-text">Add Patient & Predict</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="action-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-clipboard-list"></i>
+          </div>
+          <div class="card-title-section">
+            <h3>Patient Records</h3>
+            <p class="card-subtitle">Medical Database</p>
+          </div>
+        </div>
+        <p class="card-description">Access comprehensive patient records, medical history, and previous risk assessment reports</p>
+        <a href="{{ url_for('my_patients') }}" class="card-button success">
+          <span class="btn-text">View My Patients</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="action-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-sign-out-alt"></i>
+          </div>
+          <div class="card-title-section">
+            <h3>Session Control</h3>
+            <p class="card-subtitle">Secure Logout</p>
+          </div>
+        </div>
+        <p class="card-description">Securely end your current session and log out of the medical management system</p>
+        <a href="{{ url_for('logout') }}" class="card-button danger">
+          <span class="btn-text">Logout</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.doctor-dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #0ea5e9 100%);
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-section {
+  flex: 1;
+}
+
+.dashboard-title {
+  color: #1e293b;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
+}
+
+.dashboard-subtitle {
+  color: #64748b;
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.doctor-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(14, 165, 233, 0.1);
+  padding: 16px 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(14, 165, 233, 0.2);
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #0ea5e9, #0369a1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.doctor-details {
+  text-align: right;
+}
+
+.welcome-text {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin: 0 0 4px 0;
+  font-weight: 500;
+}
+
+.doctor-email {
+  color: #0f172a;
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.action-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0ea5e9, #0369a1);
+}
+
+.action-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  border-color: rgba(14, 165, 233, 0.3);
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.card-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.action-card:nth-child(1) .card-icon {
+  background: linear-gradient(135deg, #0ea5e9, #0369a1);
+}
+
+.action-card:nth-child(2) .card-icon {
+  background: linear-gradient(135deg, #10b981, #047857);
+}
+
+.action-card:nth-child(3) .card-icon {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.card-title-section {
+  flex: 1;
+}
+
+.action-card h3 {
+  color: #1e293b;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.card-subtitle {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.card-description {
+  color: #475569;
+  line-height: 1.7;
+  margin-bottom: 32px;
+  flex-grow: 1;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.card-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-button.primary {
+  background: linear-gradient(135deg, #0ea5e9, #0369a1);
+  color: white;
+}
+
+.card-button.primary:hover {
+  background: linear-gradient(135deg, #0369a1, #0c4a6e);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
+}
+
+.card-button.success {
+  background: linear-gradient(135deg, #10b981, #047857);
+  color: white;
+}
+
+.card-button.success:hover {
+  background: linear-gradient(135deg, #047857, #065f46);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+}
+
+.card-button.danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.card-button.danger:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+}
+
+.btn-text {
+  font-weight: 600;
+}
+
+.card-button i {
+  transition: transform 0.3s ease;
+}
+
+.card-button:hover i {
+  transform: translateX(4px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .doctor-dashboard {
+    padding: 20px 15px;
+  }
+  
+  .dashboard-header {
+    padding: 30px 20px;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+  
+  .doctor-info {
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .doctor-details {
+    text-align: center;
+  }
+  
+  .dashboard-title {
+    font-size: 2rem;
+  }
+  
+  .actions-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .action-card {
+    padding: 30px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-title {
+    font-size: 1.8rem;
+  }
+  
+  .avatar {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+  
+  .card-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+    margin: 0 auto;
+  }
+  
+  .card-button {
+    padding: 14px 20px;
+  }
+}
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}

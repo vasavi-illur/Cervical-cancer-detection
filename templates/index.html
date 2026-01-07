@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+  /* All icons light blue */
+  .nav-menu a i {
+    color: #1e90ff !important;   /* light blue */
+    font-size: 20px;
+  }
+
+  /* All circles same light blue */
+  .nav-menu a {
+    background: #bfefff !important;  /* light blue */
+  }
+
+  /* Active (Home) SAME as others */
+  .nav-menu a.active {
+    background: #bfefff !important;
+  }
+
+  .nav-menu a.active i {
+    color: #1e90ff !important;
+  }
+</style>
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Cancer Detection</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <link href="/static/img/favicon.png" rel="icon">
+  <link href="/static/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="/static/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="/static/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <i style="background-color: rgba(20, 179, 179, 0.589);" class="bi bi-list mobile-nav-toggle d-lg-none"></i>
+  <header style="background-color: rgba(20, 179, 179, 0.589);"  id="header" class="d-flex flex-column justify-content-center">
+
+    {% block navbar %}
+      <nav id="navbar" class="navbar nav-menu">
+       <ul>
+  {% if request.path == '/' %}
+
+    <li>
+      <a href="{{ url_for('index') }}" class="nav-link scrollto active">
+        <i class="bx bx-home"></i> <span>Home</span>
+      </a>
+    </li>
+
+    <li>
+      <a href="{{ url_for('about') }}" class="nav-link scrollto">
+        <i class="bx bx-user"></i> <span>About</span>
+      </a>
+    </li>
+
+    <li>
+      <a href="{{ url_for('register') }}" class="nav-link scrollto">
+        <i class="bx bx-file-blank"></i> <span>Register</span>
+      </a>
+    </li>
+
+    <li>
+      <a href="{{ url_for('login') }}" class="nav-link scrollto">
+        <i class="bx bx-book-content"></i> <span>Login</span>
+      </a>
+    </li>
+
+  {% endif %}
+</ul>
+
+      </nav>
+    {% endblock %}
+
+  </header>
+
+  
+
+  <main id="main">
+    {% block content %}
+      <section id="hero" class="d-flex flex-column justify-content-center">
+        <div class="container" data-aos="zoom-in" data-aos-delay="100">
+          <h1>Cervical Cancer Detection</h1>
+          <!-- <p>& <span class="typed" data-typed-items="Reporting, Reporting, Reporting, Reporting"></span></p> -->
+          <!-- <div class="social-links">
+            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+          </div> -->
+        </div>
+      </section>
+    {% endblock %}
+  </main>
+
+  <div id="preloader"></div>
+
+  {% if message %}
+    <script>
+      alert("{{ message }}")        
+    </script>
+  {% endif %}
+  
+
+  <!-- Vendor JS Files -->
+  <script src="/static/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="/static/vendor/aos/aos.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/static/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/static/vendor/typed.js/typed.umd.js"></script>
+  <script src="/static/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="/static/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/static/js/main.js"></script>
+
+</body>
+
+</html>
